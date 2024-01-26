@@ -1,0 +1,39 @@
+---
+- name: Install Docker on Ubuntu 22.04
+  hosts: all
+  become: true
+  tasks:
+    - name: Update APT package cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    # - name: Install dependencies
+    #   ansible.builtin.apt:
+    #     name:
+    #       - apt-transport-https
+    #       - ca-certificates
+    #       - curl
+    #       - gnupg
+    #       - lsb-release
+    #     state: present
+
+    # - name: Add Docker GPG key
+    #   ansible.builtin.apt_key:
+    #     url: https://download.docker.com/linux/ubuntu/gpg
+    #     id: 0EBFCD88
+    #     state: present
+
+    # - name: Add Docker repository
+    #   ansible.builtin.apt_repository:
+    #     repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    #     state: present
+
+    - name: Install Docker
+      command: apt install docker-ce -y
+
+    - name: Check docker status
+      command: systemctl status docker
+      register: docker_status
+
+    - debug:
+        var: docker_status
