@@ -1,0 +1,15 @@
+
+# Use the devopsedu/webapp as the base image
+FROM devopsedu/webapp
+
+# Set the working directory
+WORKDIR /var/www/html
+
+# Copy the website content into the container
+COPY ./ /var/www/html
+
+# Expose the port your web application will run on
+EXPOSE 80
+
+# Command to run your PHP application
+CMD ["apache2ctl", "-D", "FOREGROUND"]
